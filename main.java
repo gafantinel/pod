@@ -19,15 +19,15 @@ public class main {
     public static void main(String[] args) {
         String string = "texto.txt";
         arquivoFinal = "output.txt";
+        int numeroArqTemp = 0;
 
         //Arquivos temporários são armazenados em vetores para facilitar a sua chamada posterior
         arquivosTemporarios_A = new ArrayList<String>();
         arquivosTemporarios_B = new ArrayList<String>();
 
-        if (!status(string)) {
+        if (!status(string, numeroArqTemp)) {
             //"rodada" determinará em qual arquivo temporário será escrita a sequência de palavras 
             int rodada = 1;
-            int numeroArqTemp = 0;
             String arquivoImpar = null;
 
             
@@ -102,15 +102,17 @@ public class main {
                 f.renameTo(o);
 
             }
+
+
         }
     }
 
-    private static boolean status(String string) {
+    private static boolean status(String string, int numeroArqTemp) {
         File arqAux = new File(string);
         //Carrega o arquivo auxiliar no Scanner
         try {
             Scanner input = new Scanner(arqAux);
-            int numeroArqTemp = 0;
+            //int numeroArqTemp = 0;
             int rodada = 0;
             int contadorStrings = 0;
             while (input.hasNext()) {
@@ -135,6 +137,13 @@ public class main {
             input.close();
         } catch (FileNotFoundException e) {
             System.exit(1);
+        }
+
+        for (int z = 0; z < numeroArqTemp; z++){
+
+            String delete = "output" + z + ".txt";                
+            File file = new File(delete);
+            file.delete();
         }
         return false;
     }
